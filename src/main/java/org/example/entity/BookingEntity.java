@@ -12,7 +12,7 @@ public class BookingEntity {
     private Double amount = getAmount();
 
     private Double getAmount() {
-        return room.getCost() * day;
+        return room.getPrice() * day;
     }
 
 

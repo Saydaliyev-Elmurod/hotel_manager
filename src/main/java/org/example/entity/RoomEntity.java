@@ -17,14 +17,24 @@ public class RoomEntity {
     @Column(name = "number", nullable = false, length = 15, unique = true)
     private String number;
     @Column(nullable = false, length = 10)
-
     private Integer floor;
     @Column
     @Enumerated(EnumType.STRING)
     private RoomStatus roomStatus;
     @Column
-    private Double cost;
+    private Double price;
     @Column
     private Double area;
 
+    @Override
+    public String toString() {
+        return "RoomEntity{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", floor=" + floor +
+                ", roomStatus=" + roomStatus +
+                ", price=" + price +
+                ", area=" + area +
+                '}';
+    }
 }
