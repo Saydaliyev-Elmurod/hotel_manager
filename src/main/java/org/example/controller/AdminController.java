@@ -40,6 +40,9 @@ public class AdminController {
                             case 5 -> {
                                 findRoom();
                             }
+                            case 6 -> {
+                                convenient();
+                            }
 
                         }
                     }
@@ -50,28 +53,21 @@ public class AdminController {
 
     }
 
+    private void convenient() {
+
+    }
+
     private void findRoom() {
         System.out.print("Enter number of room ");
         String number = ComponentContainer.StringScanner.next();
-roomService.findRoom(number);
+        roomService.findRoom(number);
     }
 
     private void updateRoom() {
         System.out.print("Enter  number of room : ");
         String number = ComponentContainer.StringScanner.next();
+        roomService.updateRoom(number);
 
-        System.out.print("Enter floor : ");
-        Integer floor = ComponentContainer.IntScanner.nextInt();
-
-        System.out.print("Enter type : ");
-        String type = ComponentContainer.StringScanner.next();
-
-        System.out.print("Enter price : ");
-        Double price = ComponentContainer.doubleScanner.nextDouble();
-
-        System.out.print("Enter area : ");
-        Double area = ComponentContainer.doubleScanner.nextDouble();
-        roomService.addRoom(number, floor, type, price, area);
     }
 
     private void deleteRoom() {

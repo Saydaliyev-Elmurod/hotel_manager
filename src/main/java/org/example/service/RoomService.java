@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.container.ComponentContainer;
 import org.example.entity.RoomEntity;
 import org.example.enums.RoomStatus;
 import org.example.repository.RoomRepository;
@@ -42,21 +43,49 @@ public class RoomService {
         return roomRepository.getRoomLIst();
     }
 
-    public void deleteRoom(String  number) {
+    public void deleteRoom(String number) {
         RoomEntity room = roomRepository.getByNumber(number);
-        if (room==null){
+        if (room == null) {
             System.out.println("Not found room ");
             return;
         }
-        roomRepository.deleteRoom(room.getId());
+        roomRepository.deleteRoom(room);
     }
 
     public void findRoom(String number) {
         RoomEntity room = roomRepository.getByNumber(number);
-        if (room==null){
+        if (room == null) {
             System.out.println("Not found room ");
-        }else {
+        } else {
             System.out.println(room);
         }
+    }
+
+    public void updateRoom(String number) {
+        RoomEntity room = roomRepository.getByNumber(number);
+        if (room == null) {
+            System.out.println("Room not found");
+            return;
+        }
+        System.out.print("Enter new Number");
+        String num = ComponentContainer.StringScanner.next();
+        room.setNumber(num);
+
+        System.out.print("Enter floor : ");
+        Integer floor = ComponentContainer.IntScanner.nextInt();
+        room.setFloor(floor);
+
+        System.out.print("Enter type : ");
+        String type = ComponentContainer.StringScanner.next();
+        room.setRoomStatus(RoomStatus.valueOf(type));
+
+        System.out.print("Enter price : ");
+        Double price = ComponentContainer.doubleScanner.nextDouble();
+        room.setPrice(price);
+
+        System.out.print("Enter area : ");
+        Double area = ComponentContainer.doubleScanner.nextDouble();
+        room.setArea(area);
+        roomRepository.update(room);
     }
 }

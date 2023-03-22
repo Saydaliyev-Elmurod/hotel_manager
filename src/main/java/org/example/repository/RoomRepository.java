@@ -47,7 +47,7 @@ public class RoomRepository {
     }
 
     public List<RoomEntity> getRoomLIst() {
-        Session session =   sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         Query<RoomEntity> query = session.createQuery("FROM RoomEntity ", RoomEntity.class);
         List<RoomEntity> roomEntityList = query.getResultList();
         session.close();
@@ -55,9 +55,19 @@ public class RoomRepository {
 
     }
 
-    public void deleteRoom(Integer id) {
+    public void deleteRoom(RoomEntity room) {
         Session session = sessionFactory.openSession();
-        session.delete(id);
+        Transaction transaction = session.beginTransaction();
+        session.delete(room);
+        transaction.commit();
+        session.close();
+    }
+
+    public void update(RoomEntity room) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(room);
+        transaction.commit();
         session.close();
     }
 }
