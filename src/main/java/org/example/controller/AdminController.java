@@ -1,8 +1,8 @@
 package org.example.controller;
 
 import org.example.container.ComponentContainer;
-import org.example.entity.RoomEntity;
 import org.example.service.ConvenientService;
+import org.example.service.EmployeeTypeService;
 import org.example.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,8 @@ public class AdminController {
     private RoomService roomService;
     @Autowired
     private ConvenientService convenientService;
+    @Autowired
+    private EmployeeTypeService employeeTypeService;
 
     public void start() {
         boolean isEnd = true;
@@ -51,10 +53,39 @@ public class AdminController {
                         }
                     }
                 }
+                case 3 -> {
+                    boolean isEndSub = true;
+                    while (isEndSub) {
+                        convenientMenu();
+                        int subAction = ComponentContainer.getAction();
+                        switch (subAction) {
+                            case 1 -> addEmployeeType();
+                            case 2 -> listEmployeeType();
+                            case 3 -> deleteEmployeeTYpe();
+                            case 0 -> isEndSub = false;
+                        }
+                    }
+                }
 
             }
         }
 
+    }
+
+    private void deleteEmployeeTYpe() {
+        System.out.print("Enter id ");
+        Integer id = ComponentContainer.IntScanner.nextInt();
+        employeeTypeService.delete(id);
+    }
+
+    private void listEmployeeType() {
+        print(employeeTypeService.list());
+    }
+
+    private void addEmployeeType() {
+        System.out.print("Enter name");
+        String name = ComponentContainer.StringScanner.next();
+        employeeTypeService.add(name);
     }
 
     private void deleteConvenient() {
@@ -85,7 +116,7 @@ public class AdminController {
         Integer room_id = ComponentContainer.IntScanner.nextInt();
         System.out.print("Enter id of convenient ");
         Integer con_id = ComponentContainer.IntScanner.nextInt();
-        roomService.addConvenient(room_id,con_id);
+        roomService.addConvenient(room_id, con_id);
 
     }
 
