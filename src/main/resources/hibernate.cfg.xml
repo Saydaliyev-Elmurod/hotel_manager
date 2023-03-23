@@ -17,5 +17,8 @@
         <mapping class="org.example.entity.GuessEntity"/>
         <mapping class="org.example.entity.PassportEntity"/>
         <mapping class="org.example.entity.RoomEntity"/>
+        <mapping class="org.example.entity.ConvenientEntity"/>
+        <mapping class="org.example.entity.RoomConvenientEntity"/>
+        <mapping class="org.example.entity.EmployeeTypeEntity"/>
     </session-factory>
 </hibernate-configuration>

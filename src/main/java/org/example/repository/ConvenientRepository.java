@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.entity.RoomConvenientEntity;
+import org.example.entity.ConvenientEntity;
 import org.example.entity.RoomEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,11 +13,11 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
-public class RoomRepository {
+public class ConvenientRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void save(RoomEntity entity) {
+    public void save(ConvenientEntity entity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(entity);
@@ -25,58 +25,57 @@ public class RoomRepository {
         session.close();
     }
 
-    public RoomEntity getById(Integer id) {
+    public ConvenientEntity getById(Integer id) {
         Session session = sessionFactory.openSession();
-        RoomEntity room = session.find(RoomEntity.class, id);
+        ConvenientEntity c = session.find(ConvenientEntity.class, id);
         session.close();
-        return room;
+        return c;
     }
 
-    public RoomEntity getByNumber(String number) {
+    public ConvenientEntity getByName(String name) {
         Session session = sessionFactory.openSession();
-        Query<RoomEntity> query = session.createQuery("FROM RoomEntity where number = :num", RoomEntity.class);
-        query.setParameter("num", number);
-        RoomEntity room = null;
+        Query<ConvenientEntity> query = session.createQuery("FROM ConvenientEntity where name = :n", ConvenientEntity.class);
+        query.setParameter("n", name);
+        ConvenientEntity convenient = null;
         try {
-            room = query.getSingleResult();
+            convenient = query.getSingleResult();
         } catch (NoResultException e) {
 
         }
         session.close();
-        return room;
+        return convenient;
 
     }
 
-    public List<RoomEntity> getRoomLIst() {
+    public List<ConvenientEntity> getConvenientList() {
         Session session = sessionFactory.openSession();
-        Query<RoomEntity> query = session.createQuery("FROM RoomEntity ", RoomEntity.class);
-        List<RoomEntity> roomEntityList = query.getResultList();
+        Query<ConvenientEntity> query = session.createQuery("FROM ConvenientEntity ", ConvenientEntity.class);
+        List<ConvenientEntity> convenientEntityList = query.getResultList();
         session.close();
-        return roomEntityList;
+        return convenientEntityList;
 
     }
 
-    public void deleteRoom(RoomEntity room) {
+    public void deleteConvenient(int id) {
+
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(room);
+
+        Query query = session.createQuery("delete from ConvenientEntity where id =:id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+
+        transaction.commit();
+        session.close();
+
+    }
+
+    public void update(ConvenientEntity convenient) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(convenient);
         transaction.commit();
         session.close();
     }
 
-    public void update(RoomEntity room) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(room);
-        transaction.commit();
-        session.close();
-    }
-
-    public void addConvenient(RoomConvenientEntity roomConvenient) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(roomConvenient);
-        transaction.commit();
-        session.close();
-    }
 }

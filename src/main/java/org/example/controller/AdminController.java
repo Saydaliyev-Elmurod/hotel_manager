@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.container.ComponentContainer;
 import org.example.entity.RoomEntity;
+import org.example.service.ConvenientService;
 import org.example.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private ConvenientService convenientService;
 
     public void start() {
         boolean isEnd = true;
@@ -25,25 +28,26 @@ public class AdminController {
                         roomMenu();
                         int subAction = ComponentContainer.getAction();
                         switch (subAction) {
-                            case 1 -> {
-                                addRoom();
-                            }
-                            case 2 -> {
-                                listRoom();
-                            }
-                            case 3 -> {
-                                deleteRoom();
-                            }
-                            case 4 -> {
-                                updateRoom();
-                            }
-                            case 5 -> {
-                                findRoom();
-                            }
-                            case 6 -> {
-                                convenient();
-                            }
-
+                            case 1 -> addRoom();
+                            case 2 -> listRoom();
+                            case 3 -> deleteRoom();
+                            case 4 -> updateRoom();
+                            case 5 -> findRoom();
+                            case 6 -> convenientRoom();
+                            case 0 -> isEndSub = false;
+                        }
+                    }
+                }
+                case 2 -> {
+                    boolean isEndSub = true;
+                    while (isEndSub) {
+                        convenientMenu();
+                        int subAction = ComponentContainer.getAction();
+                        switch (subAction) {
+                            case 1 -> addConvenient();
+                            case 2 -> listConvenient();
+                            case 3 -> deleteConvenient();
+                            case 0 -> isEndSub = false;
                         }
                     }
                 }
@@ -53,7 +57,35 @@ public class AdminController {
 
     }
 
-    private void convenient() {
+    private void deleteConvenient() {
+        System.out.print("Enter id ");
+        int id = ComponentContainer.IntScanner.nextInt();
+        convenientService.delete(id);
+    }
+
+    private void listConvenient() {
+        print(convenientService.list());
+    }
+
+    private void addConvenient() {
+        System.out.print("Enter name");
+        String name = ComponentContainer.StringScanner.next();
+        convenientService.add(name);
+    }
+
+    private void convenientMenu() {
+        System.out.print("1.Add\n" +
+                "2.List\n" +
+                "3.Delete\n" +
+                "0.Exit");
+    }
+
+    private void convenientRoom() {
+        System.out.print("Enter id of room ");
+        Integer room_id = ComponentContainer.IntScanner.nextInt();
+        System.out.print("Enter id of convenient ");
+        Integer con_id = ComponentContainer.IntScanner.nextInt();
+        roomService.addConvenient(room_id,con_id);
 
     }
 
@@ -80,7 +112,7 @@ public class AdminController {
         print(roomService.listRoom());
     }
 
-    private void print(List<RoomEntity> list) {
+    private void print(List<?> list) {
         list.forEach(System.out::println);
     }
 

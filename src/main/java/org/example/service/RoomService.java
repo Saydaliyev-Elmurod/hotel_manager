@@ -1,8 +1,11 @@
 package org.example.service;
 
 import org.example.container.ComponentContainer;
+import org.example.entity.ConvenientEntity;
+import org.example.entity.RoomConvenientEntity;
 import org.example.entity.RoomEntity;
 import org.example.enums.RoomStatus;
+import org.example.repository.ConvenientRepository;
 import org.example.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ import java.util.List;
 public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private ConvenientRepository convenientRepository;
 
     public void addRoom(String number, Integer floor, String type, Double price, Double area) {
         //checking ....
@@ -87,5 +92,22 @@ public class RoomService {
         Double area = ComponentContainer.doubleScanner.nextDouble();
         room.setArea(area);
         roomRepository.update(room);
+    }
+
+    public void addConvenient(Integer roomId, Integer conId) {
+        RoomEntity room = roomRepository.getById(roomId);
+        if (room ==null){
+            System.out.println("Room not found");
+            return;
+        }
+        ConvenientEntity convenient = convenientRepository.getById(conId);
+        if (convenient ==null){
+            System.out.println("Convenient not found");
+            return;
+        }
+        RoomConvenientEntity roomConvenient = new RoomConvenientEntity();
+        roomConvenient.setRoom(room);
+        roomConvenient.setConvenient(convenient);
+        roomRepository.addConvenient(roomConvenient);
     }
 }
