@@ -70,12 +70,6 @@ public class ConvenientRepository {
 
     }
 
-    public void update(ConvenientEntity convenient) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(convenient);
-        transaction.commit();
-        session.close();
-    }
+
 
 }

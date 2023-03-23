@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.container.ComponentContainer;
 import org.example.service.ConvenientService;
+import org.example.service.EmployeeService;
 import org.example.service.EmployeeTypeService;
 import org.example.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class AdminController {
     private ConvenientService convenientService;
     @Autowired
     private EmployeeTypeService employeeTypeService;
+    @Autowired
+    private EmployeeService employeeService;
 
     public void start() {
         boolean isEnd = true;
@@ -56,7 +59,7 @@ public class AdminController {
                 case 3 -> {
                     boolean isEndSub = true;
                     while (isEndSub) {
-                        convenientMenu();
+                        typeMenu();
                         int subAction = ComponentContainer.getAction();
                         switch (subAction) {
                             case 1 -> addEmployeeType();
@@ -66,10 +69,60 @@ public class AdminController {
                         }
                     }
                 }
+                case 4 -> {
+                    boolean isEndSub = true;
+                    while (isEndSub) {
+                        typeMenu();
+                        int subAction = ComponentContainer.getAction();
+                        switch (subAction) {
+                            case 1 -> addEmployee();
+                            case 2 -> listEmployee();
+                            case 3 -> deleteEmployee();
+                            case 0 -> isEndSub = false;
+                        }
+                    }
+                }
 
             }
         }
 
+    }
+
+    private void deleteEmployee() {
+        System.out.print("Enter id ");
+        Integer id = ComponentContainer.IntScanner.nextInt();
+        employeeService.delete(id);
+    }
+
+    private void listEmployee() {
+        print(employeeService.list());
+    }
+
+    private void addEmployee() {
+        System.out.print("Enter name");
+        String name = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter surname");
+        String surname = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter phone");
+        String phone = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter birthday(yyyy-MM-dd) ");
+        String birthday = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter type_id");
+        Integer id = ComponentContainer.IntScanner.nextInt();
+
+        employeeService.add(name, surname, phone, birthday, id);
+
+    }
+
+    private void typeMenu() {
+        System.out.print("1.Add\n" +
+                "2.List\n" +
+                "3.Delete\n" +
+                "0.Exit\n");
     }
 
     private void deleteEmployeeTYpe() {
@@ -108,7 +161,7 @@ public class AdminController {
         System.out.print("1.Add\n" +
                 "2.List\n" +
                 "3.Delete\n" +
-                "0.Exit");
+                "0.Exit\n");
     }
 
     private void convenientRoom() {
@@ -154,7 +207,7 @@ public class AdminController {
                 "4.Update\n" +
                 "5.Find\n" +
                 "6.Convenient\n" +
-                "0.Exit");
+                "0.Exit\n");
     }
 
     private void addRoom() {

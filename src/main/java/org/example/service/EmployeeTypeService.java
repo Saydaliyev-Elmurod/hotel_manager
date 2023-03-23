@@ -1,12 +1,10 @@
 package org.example.service;
 
-import org.example.entity.ConvenientEntity;
 import org.example.entity.EmployeeTypeEntity;
-import org.example.repository.ConvenientRepository;
+import org.example.repository.EmployeeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.EnumMap;
 import java.util.List;
 
 @Service

@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.repository;
 
 import org.example.entity.ConvenientEntity;
 import org.example.entity.EmployeeTypeEntity;
