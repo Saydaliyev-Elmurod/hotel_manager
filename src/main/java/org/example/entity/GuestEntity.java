@@ -5,25 +5,25 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "passport")
-public class PassportEntity {
+@Table(name = "guess")
+public class GuestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
-    private Integer employee_id;
+    private String name;
     @Column
-    private String number;
+
+    private String surname;
     @Column
-    private LocalDate given_date;
-    @Column
-    private LocalDate exp_date;
-    @Column
-    private String givenBy;
+
+    private String phone;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "passport_id")
+    private PassportEntity passport;
 }

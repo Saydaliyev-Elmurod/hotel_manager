@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class BookingEntity {
     private Integer id;
-    private GuessEntity guess;
+    private GuestEntity guess;
     private RoomEntity room;
     private LocalDate fromDate;
     private Integer day;

@@ -14,7 +14,7 @@
         <!-- MAPPINGS -->
         <mapping class="org.example.entity.BookingEntity"/>
         <mapping class="org.example.entity.EmployeeEntity"/>
-        <mapping class="org.example.entity.GuessEntity"/>
+        <mapping class="org.example.entity.GuestEntity"/>
         <mapping class="org.example.entity.PassportEntity"/>
         <mapping class="org.example.entity.RoomEntity"/>
         <mapping class="org.example.entity.ConvenientEntity"/>

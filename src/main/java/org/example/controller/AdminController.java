@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import org.example.container.ComponentContainer;
-import org.example.service.ConvenientService;
-import org.example.service.EmployeeService;
-import org.example.service.EmployeeTypeService;
-import org.example.service.RoomService;
+import org.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,6 +17,8 @@ public class AdminController {
     private EmployeeTypeService employeeTypeService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private GuestService guestService;
 
     public void start() {
         boolean isEnd = true;
@@ -82,10 +81,58 @@ public class AdminController {
                         }
                     }
                 }
+                case 5 -> {
+                    boolean isEndSub = true;
+                    while (isEndSub) {
+                        guestMenu();
+                        int subAction = ComponentContainer.getAction();
+                        switch (subAction) {
+                            case 1 -> addGuest();
+                            case 2 -> listGuest();
+                            case 0 -> isEndSub = false;
+                        }
+                    }
+                }
 
             }
         }
 
+    }
+
+    private void listGuest() {
+        print(guestService.list());
+    }
+
+    private void addGuest() {
+        System.out.print("Enter name");
+        String name = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter surname");
+        String surname = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter phone");
+        String phone = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter passport number (XX1231231)");
+        String pass_num = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter given date");
+        String given_date = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter exp date");
+        String exp_date = ComponentContainer.StringScanner.next();
+
+        System.out.print("Enter given by");
+        String given_by = ComponentContainer.StringScanner.next();
+
+        guestService.add(name,surname,phone,pass_num,given_date,exp_date,given_by);
+
+    }
+
+    private void guestMenu() {
+        System.out.print("1.Add\n" +
+                "2.List\n" +
+                "0.Exit\n");
     }
 
     private void deleteEmployee() {
